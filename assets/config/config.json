@@ -1,8 +1,5 @@
 {
-    "level": [
-        "XXXXX",
-        "X   X"
-    ],
-    "text": "Hallo Welt!",
-    "text2": "Halloooo Welt"
+    "blackFigure": "assets/images/figures/white_shield.png",
+    "whiteFigure": "assets/images/figures/white_shield.png",
+    "kingFigure": "assets/images/figures/white_shield.png"
 }

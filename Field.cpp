@@ -1,10 +1,7 @@
 #include "Field.h"
 
-Field::Field() {
-
-}
-
 Field::Field(GameManager* manager, const char* file) {
+	this->manager = manager;
 	this->config = new Config(file);
 	std::vector<std::string> tmpField = this->config->getStringArray("field");
 	this->size = tmpField.size();
@@ -14,6 +11,30 @@ Field::Field(GameManager* manager, const char* file) {
 			if (line.at(i) == '+') {
 
 			}
+			//white
+			else if (line.at(i) == '-') {
+
+			}
+			//king
+			else if (line.at(i) == '#') {
+
+			}
 		}
 	}
+}
+
+void Field::clean() {
+
+}
+
+void Field::handleEvents() {
+
+}
+
+void Field::update() {
+
+}
+
+void Field::render() {
+
 }

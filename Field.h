@@ -11,7 +11,7 @@
 
 class Field {
 public:
-	Field();
+	Field() {}
 	Field(GameManager* manager, const char* file);
 	std::map<std::vector<int>, std::vector<int>> getMoves();
 	void clean();
