@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\GameStates">
+      <UniqueIdentifier>{633b726c-666a-4521-ae2e-76e6c242f41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{34a11d1a-02e7-4476-8d6f-8e410e231a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Actions">
+      <UniqueIdentifier>{0b07ad55-b3a8-4e79-b7a2-8cb61b081598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GameObjects">
+      <UniqueIdentifier>{3c06e8de-3fff-42f3-95a1-e7940a6387c9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="StartGameAction.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Figure.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="StartGameAction.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>src\GameObjects</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
