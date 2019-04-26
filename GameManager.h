@@ -36,9 +36,11 @@ public:
 		return this->renderer;
 	}
 
+	int getTime() { return this->time; }
+
 private:
 	std::vector<GameState*> states;
-
+	int time;
 	bool isRunning;
 	SDL_Window *window;
 	SDL_Renderer *renderer;

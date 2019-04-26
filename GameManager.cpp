@@ -80,6 +80,7 @@ void GameManager::handleEvents() {
 }
 
 void GameManager::update() {
+	this->time++;
 	this->states.back()->update();
 }
 

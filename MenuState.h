@@ -35,7 +35,6 @@ private:
 	//elements
 	Texture* backgroundTexture;
 	Button* button;
-	Config* config;
 };
 
 #endif

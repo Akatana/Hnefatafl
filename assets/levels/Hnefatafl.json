@@ -10,8 +10,8 @@
 	"+    -    +",
 	"           ",
 	"     +     ",
-	"   +++++   ",
+	"   +++++   "
     ],
     "name": "Hnefatafl",
-    "bgImg": "assets/images/field_png"
+    "fieldImg": "assets/images/field.png"
 }

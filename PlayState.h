@@ -5,6 +5,9 @@
 #include "SDL_image.h"
 #include "GameState.h"
 #include "GameManager.h"
+#include "Texture.h"
+#include "Label.h"
+#include "Field.h"
 
 class PlayState : public GameState {
 public:
@@ -28,6 +31,7 @@ protected:
 private:
 	static PlayState playState;
 	GameManager* manager;
+	Field* field;
 };
 
 #endif

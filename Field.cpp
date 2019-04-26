@@ -1,40 +1,175 @@
 #include "Field.h"
 
-Field::Field(GameManager* manager, const char* file) {
+Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 	this->manager = manager;
 	this->config = new Config(file);
+	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), 396, 396);
+	this->fieldTexture->setPos(xPos, yPos);
 	std::vector<std::string> tmpField = this->config->getStringArray("field");
 	this->size = tmpField.size();
+	int y = 0;
 	for (auto &line : tmpField) {
-		for (int i = 0; i < this->size; i++) {
+		for (int x = 0; x < this->size; x++) {
 			//Black
-			if (line.at(i) == '+') {
-
+			if (line.at(x) == '+') {
+				Figure* fig = new Figure(this->manager, x, y, 0);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({x,y}, fig));
+				this->figures.push_back(fig);
 			}
 			//white
-			else if (line.at(i) == '-') {
-
+			else if (line.at(x) == '-') {
+				Figure* fig = new Figure(this->manager, x, y, 1);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
+				this->figures.push_back(fig);
 			}
 			//king
-			else if (line.at(i) == '#') {
-
+			else if (line.at(x) == '#') {
+				Figure* fig = new Figure(this->manager, x, y, 2);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
+				this->figures.push_back(fig);
+			}
+			else {
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, nullptr));
 			}
 		}
+		y++;
 	}
+}
+
+void Field::setPos(int x, int y) {
+	this->fieldTexture->setPos(x, y);
 }
 
 void Field::clean() {
 
 }
 
-void Field::handleEvents() {
+void Field::checkAvailableFields() {
+	if (this->selectedFigure == nullptr) {
+		return;
+	}
+	this->availableFields.fill({ 0,0,0,0 });
+	int x = this->selectedFigure->getXField();
+	int y = this->selectedFigure->getYField();
+	//Fields left to the selected figure
+	for (int xNeg = x-1; xNeg >= 0; xNeg--) {
+		//ignore corners
+		if (((xNeg == 0 && y == 0) || (xNeg == 0 && y == this->size - 1)) && this->selectedFigure->getType() != 2) {
+			break;
+		}
+		if (this->field.at({ xNeg, y }) == nullptr) {
+			this->availableFields[0].w += 36;
+		}
+		else {
+			break;
+		}
+	}
+	this->availableFields[0].h = 36;
+	this->availableFields[0].x = this->fieldTexture->getPos()->x + (x*36) - this->availableFields[0].w;
+	this->availableFields[0].y = this->fieldTexture->getPos()->y + (y*36);
+	//Fields right to the selected figure
+	for (int xPos = x + 1; xPos < this->size; xPos++) {
+		//ignore corners if the king is not selected
+		if (((xPos == this->size-1 && y == this->size-1) || (xPos == this->size - 1 && y == 0)) && this->selectedFigure->getType() != 2) {
+			break;
+		}
+		if (this->field.at({ xPos, y }) == nullptr) {
+			this->availableFields[1].w += 36;
+		}
+		else {
+			break;
+		}
+	}
+	this->availableFields[1].h = 36;
+	this->availableFields[1].x = this->fieldTexture->getPos()->x + (x * 36) + 36;
+	this->availableFields[1].y = this->fieldTexture->getPos()->y + (y * 36);
+	//Fields above to the selected figure
+	for (int yNeg = y - 1; yNeg >= 0; yNeg--) {
+		//ignore corners if the king is not selected
+		if (((x == 0 && yNeg == 0) || (x == this->size - 1 && yNeg == 0)) && this->selectedFigure->getType() != 2) {
+			break;
+		}
+		if (this->field.at({ x, yNeg }) == nullptr) {
+			this->availableFields[2].h += 36;
+		}
+		else {
+			break;
+		}
+	}
+	this->availableFields[2].w = 36;
+	this->availableFields[2].x = this->fieldTexture->getPos()->x + (x * 36);
+	this->availableFields[2].y = this->fieldTexture->getPos()->y + (y * 36) - this->availableFields[2].h;
+	//Fields below to the selected figure
+	for (int yPos = y + 1; yPos < this->size; yPos++) {
+		//ignore corners if the king is not selected
+		if (((x == 0 && yPos == this->size - 1) || (x == this->size - 1 && yPos == this->size - 1)) && this->selectedFigure->getType() != 2) {
+			break;
+		}
+		if (this->field.at({ x, yPos }) == nullptr) {
+			this->availableFields[3].h += 36;
+		}
+		else {
+			break;
+		}
+	}
+	this->availableFields[3].w = 36;
+	this->availableFields[3].x = this->fieldTexture->getPos()->x + (x * 36);
+	this->availableFields[3].y = this->fieldTexture->getPos()->y + (y * 36) + 36;
+}
 
+void Field::handleEvents() {
+	SDL_Event event;
+	SDL_PollEvent(&event);
+
+	if (event.type == SDL_MOUSEMOTION) {
+		int x = event.motion.x;
+		int y = event.motion.y;
+		for (Figure* &figure : this->figures) {
+			if (x > figure->getTexture()->getPos()->x && x < figure->getTexture()->getPos()->x + 36 &&
+				y > figure->getTexture()->getPos()->y && y < figure->getTexture()->getPos()->y + 36) {
+				figure->animate(true);
+			}
+			else {
+				figure->animate(false);
+			}
+		}
+	}
+
+	//check if a figure is selected or deselected
+	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		if (event.button.button == SDL_BUTTON_LEFT) {
+			int x = event.button.x;
+			int y = event.button.y;
+			for (Figure* &figure : this->figures) {
+				if (x > figure->getTexture()->getPos()->x && x < figure->getTexture()->getPos()->x + 36 &&
+						y > figure->getTexture()->getPos()->y && y < figure->getTexture()->getPos()->y + 36) {
+					this->selectedFigure = figure;
+					printf("Figur ausgewählt\n");
+					figure->animate(false);
+					this->checkAvailableFields();
+				}
+			}
+		}
+		if (event.button.button == SDL_BUTTON_RIGHT) {
+			this->selectedFigure = nullptr;
+		}
+	}
 }
 
 void Field::update() {
-
 }
 
 void Field::render() {
-
+	this->fieldTexture->render();
+	for (Figure* &figure : this->figures) {
+		figure->render();
+	}
+	SDL_SetRenderDrawBlendMode(this->manager->getRenderer(), SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(this->manager->getRenderer(), 0, 255, 0, 150);
+	for (SDL_Rect &field : this->availableFields) {
+		SDL_RenderFillRect(this->manager->getRenderer(), &field);
+	}
 }

@@ -12,7 +12,6 @@ void MenuState::init(GameManager* manager) {
 void MenuState::clean() {
 	free(this->button);
 	free(this->backgroundTexture);
-	free(this->config);
 	printf("[INFO] MenuState was cleaned\n");
 }
 
