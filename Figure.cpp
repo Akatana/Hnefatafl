@@ -37,9 +37,35 @@ void Figure::render() {
 			this->startPos = { 0,0,0,0 };
 		}
 	}
+	if (this->moving) {
+		int x = this->figureTexture->getPos()->x;
+		int y = this->figureTexture->getPos()->y;
+		printf("{%i, %i}, {%i, %i}\n", x, y, destX, destY);
+		if (this->figureTexture->getPos()->x == this->destX && this->figureTexture->getPos()->y == this->destY) {
+			this->moving = false;
+		}
+		if (x < this->destX) {
+			this->figureTexture->setPos(x+=1, y);
+		}
+		if (x > this->destX) {
+			this->figureTexture->setPos(x-=1, y);
+		}
+		if (y < this->destY) {
+			this->figureTexture->setPos(x, y += 1);
+		}
+		if (y > this->destY) {
+			this->figureTexture->setPos(x, y -= 1);
+		}
+	}
 	this->figureTexture->render();
 }
 
 void Figure::animate(bool start) {
 	this->startAnimation = start;
+}
+
+void Figure::move(int destX, int destY) {
+	this->destX = destX;
+	this->destY = destY;
+	this->moving = true;
 }

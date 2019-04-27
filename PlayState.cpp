@@ -1,14 +1,12 @@
 #include "PlayState.h"
 
-Texture background, shield, field;
 PlayState PlayState::playState;
 
 void PlayState::init(GameManager* manager) {
 	this->manager = manager;
-	background = Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
-	this->field = new Field(this->manager, "assets/levels/Hnefatafl.json", 400, 100);
+	this->background = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
+	this->field = new Field(this->manager, "assets/levels/Hnefatafl.json", 100, 100);
 	//field.setPos(400, 100);
-	shield.setPos(402, 102);
 	printf("[INFO] PlayState was initialised\n");
 
 }
@@ -47,7 +45,7 @@ void PlayState::update() {
 
 void PlayState::render() {
 	SDL_RenderClear(this->manager->getRenderer());
-	SDL_RenderCopy(this->manager->getRenderer(), background.getTexture(), NULL, background.getPos());
+	this->background->render();
 	this->field->render();
 	SDL_RenderPresent(this->manager->getRenderer());
 }

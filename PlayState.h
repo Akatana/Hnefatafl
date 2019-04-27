@@ -32,6 +32,7 @@ private:
 	static PlayState playState;
 	GameManager* manager;
 	Field* field;
+	Texture* background;
 };
 
 #endif

@@ -120,16 +120,38 @@ void Field::checkAvailableFields() {
 	this->availableFields[3].y = this->fieldTexture->getPos()->y + (y * 36) + 36;
 }
 
+std::array<int, 2> Field::getFieldOnPoint(int x, int y) {
+	x -= this->fieldTexture->getPos()->x;
+	y -= this->fieldTexture->getPos()->y;
+	int xField = 0;
+	int yField = 0;
+	std::array<int, 2> result;
+	while (yField < y) {
+		yField += 36;
+		while (xField < x) {
+			xField += 36;
+		}
+	}
+	result[0] = (xField / 36) - 1;
+	result[1] = (yField / 36) - 1;
+	return result;
+}
+
 void Field::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
 
+	if (this->selectedFigure != nullptr && this->selectedFigure->isMoving()) {
+		return;
+	}
+
+	//track mouse movement for the figure animation
 	if (event.type == SDL_MOUSEMOTION) {
 		int x = event.motion.x;
 		int y = event.motion.y;
 		for (Figure* &figure : this->figures) {
-			if (x > figure->getTexture()->getPos()->x && x < figure->getTexture()->getPos()->x + 36 &&
-				y > figure->getTexture()->getPos()->y && y < figure->getTexture()->getPos()->y + 36) {
+			if (x > this->fieldTexture->getPos()->x + figure->getXField() * 36 && x < this->fieldTexture->getPos()->x + figure->getXField() * 36 + 36 &&
+				y > this->fieldTexture->getPos()->y + figure->getYField() * 36 && y < this->fieldTexture->getPos()->y + figure->getYField() * 36 + 36) {
 				figure->animate(true);
 			}
 			else {
@@ -143,18 +165,35 @@ void Field::handleEvents() {
 		if (event.button.button == SDL_BUTTON_LEFT) {
 			int x = event.button.x;
 			int y = event.button.y;
+
+			if (this->selectedFigure != nullptr) {
+				for (SDL_Rect &field : this->availableFields) {
+					if (x > field.x && x < field.x + field.w && y > field.y && y < field.y + field.h) {
+						std::array<int, 2> field = this->getFieldOnPoint(x, y);
+						this->selectedFigure->setPos(field[0], field[1]);
+						this->selectedFigure->move(this->fieldTexture->getPos()->x + (field[0] * 36 + 2), this->fieldTexture->getPos()->y + (field[1] * 36 + 2));
+						//this->field.erase({ this->selectedFigure->getXField(), this->selectedFigure->getYField() });
+						//this->field.erase({ field[0], field[1] });
+						this->field.insert({{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }, nullptr});
+						this->field.insert({ { field[0], field[1] }, this->selectedFigure });
+						this->selectedFigure = nullptr;
+					}
+				}
+				this->selectedFigure = nullptr;
+				this->availableFields.fill({ 0,0,0,0 });
+				return;
+			}
 			for (Figure* &figure : this->figures) {
-				if (x > figure->getTexture()->getPos()->x && x < figure->getTexture()->getPos()->x + 36 &&
-						y > figure->getTexture()->getPos()->y && y < figure->getTexture()->getPos()->y + 36) {
+				if (x > this->fieldTexture->getPos()->x + figure->getXField() * 36 && x < this->fieldTexture->getPos()->x + figure->getXField() * 36 + 36 &&
+						y > this->fieldTexture->getPos()->y + figure->getYField() * 36 && y < this->fieldTexture->getPos()->y + figure->getYField() * 36 + 36) {
 					this->selectedFigure = figure;
-					printf("Figur ausgewählt\n");
-					figure->animate(false);
 					this->checkAvailableFields();
 				}
 			}
 		}
 		if (event.button.button == SDL_BUTTON_RIGHT) {
 			this->selectedFigure = nullptr;
+			this->availableFields.fill({ 0,0,0,0 });
 		}
 	}
 }

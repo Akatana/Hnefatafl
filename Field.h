@@ -35,6 +35,7 @@ private:
 
 	//methods
 	void checkAvailableFields();
+	std::array<int, 2> getFieldOnPoint(int x, int y);
 };
 
 #endif

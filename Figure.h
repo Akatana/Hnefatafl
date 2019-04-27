@@ -14,20 +14,26 @@ public:
 	int getXField() { return this->xField; }
 	int getYField() { return this->yField; }
 	void animate(bool start);
+	void move(int destX, int destY);
 	void setPos(int x, int y);
 	void render();
+	bool isMoving() { return this->moving; }
 
 private:
 	GameManager* manager;
 	Texture* figureTexture;
 	Config* config;
-	int xField;
-	int yField;
+	int xField, yField;
 	//0 = black; 1 = white; 2 = king
 	int type;
 
+	//hover animation
 	bool startAnimation = false;
 	SDL_Rect startPos;
+
+	//move animation
+	int destX, destY;
+	bool moving = false;
 };
 
 #endif 
