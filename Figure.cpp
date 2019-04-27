@@ -40,7 +40,6 @@ void Figure::render() {
 	if (this->moving) {
 		int x = this->figureTexture->getPos()->x;
 		int y = this->figureTexture->getPos()->y;
-		printf("{%i, %i}, {%i, %i}\n", x, y, destX, destY);
 		if (this->figureTexture->getPos()->x == this->destX && this->figureTexture->getPos()->y == this->destY) {
 			this->moving = false;
 		}

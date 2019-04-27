@@ -170,12 +170,13 @@ void Field::handleEvents() {
 				for (SDL_Rect &field : this->availableFields) {
 					if (x > field.x && x < field.x + field.w && y > field.y && y < field.y + field.h) {
 						std::array<int, 2> field = this->getFieldOnPoint(x, y);
-						this->selectedFigure->setPos(field[0], field[1]);
 						this->selectedFigure->move(this->fieldTexture->getPos()->x + (field[0] * 36 + 2), this->fieldTexture->getPos()->y + (field[1] * 36 + 2));
 						//this->field.erase({ this->selectedFigure->getXField(), this->selectedFigure->getYField() });
 						//this->field.erase({ field[0], field[1] });
-						this->field.insert({{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }, nullptr});
-						this->field.insert({ { field[0], field[1] }, this->selectedFigure });
+						printf("%i, %i - %i, %i\n", this->selectedFigure->getXField(), this->selectedFigure->getYField(), field[0], field[1]);
+						this->field[{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }] = nullptr;
+						this->selectedFigure->setPos(field[0], field[1]);
+						this->field[{ field[0], field[1] }] = this->selectedFigure;
 						this->selectedFigure = nullptr;
 					}
 				}
