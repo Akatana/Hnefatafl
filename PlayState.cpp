@@ -6,7 +6,14 @@ void PlayState::init(GameManager* manager) {
 	this->manager = manager;
 	this->background = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
 	this->field = new Field(this->manager, "assets/levels/Hnefatafl.json", 100, 100);
-	//field.setPos(400, 100);
+	this->gameOverText = new Label(this->manager, "assets/fonts/viking2.ttf", "0", 50);
+	this->gameOverText->setPos(100, 100);
+	this->currentPlayer = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);
+	this->currentPlayer->setPos(100, 70);
+	this->moveAmount = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);
+	this->moveAmount->setPos(420, 70);
+	this->infoText = new Label(this->manager, "assets/fonts/arial.ttf", "0", 25);
+	this->infoText->setPos(510, 100);
 	printf("[INFO] PlayState was initialised\n");
 
 }
@@ -40,12 +47,33 @@ void PlayState::handleEvents() {
 }
 
 void PlayState::update() {
+	std::string currentPlayer;
+	if (this->field->getCurrentPlayer() == 0) {
+		currentPlayer = "Schwarz";
+	}
+	else {
+		currentPlayer = "Weiß";
+	}
+	if (this->field->isFinished()) {
+		this->gameOverText->setText("assets/fonts/viking2.ttf", (currentPlayer + " hat gewonnen!").c_str(), 50);
+	}
+	this->infoText->setText("assets/fonts/arial.ttf", this->field->getText().c_str(), 20);
+	this->currentPlayer->setText("assets/fonts/arial.ttf", ("Am Zug: " + currentPlayer).c_str(), 25);
+	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getMoves().size())).c_str(), 25);
 	this->field->update();
 }
 
 void PlayState::render() {
 	SDL_RenderClear(this->manager->getRenderer());
 	this->background->render();
-	this->field->render();
+	if (!this->field->isFinished()) {
+		this->field->render();
+		this->currentPlayer->render();
+		this->moveAmount->render();
+		this->infoText->render();
+	}
+	else {
+		this->gameOverText->render();
+	}
 	SDL_RenderPresent(this->manager->getRenderer());
 }

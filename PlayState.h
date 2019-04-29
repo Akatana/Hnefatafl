@@ -33,6 +33,10 @@ private:
 	GameManager* manager;
 	Field* field;
 	Texture* background;
+	Label* gameOverText;
+	Label* currentPlayer;
+	Label* moveAmount;
+	Label* infoText;
 };
 
 #endif

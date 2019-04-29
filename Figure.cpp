@@ -3,6 +3,12 @@
 Figure::Figure(GameManager* manager, int x, int y, int type) {
 	this->manager = manager;
 	this->type = type;
+	if (this->type == 0) {
+		this->player = 0;
+	}
+	else {
+		this->player = 1;
+	}
 	this->config = new Config("assets/config/config.json");
 	if (this->type == 0) {
 		this->figureTexture = new Texture(this->manager->getRenderer(), this->config->getString("blackFigure").c_str(), 32, 32);
@@ -40,20 +46,21 @@ void Figure::render() {
 	if (this->moving) {
 		int x = this->figureTexture->getPos()->x;
 		int y = this->figureTexture->getPos()->y;
+		int speed = 4;
 		if (this->figureTexture->getPos()->x == this->destX && this->figureTexture->getPos()->y == this->destY) {
 			this->moving = false;
 		}
 		if (x < this->destX) {
-			this->figureTexture->setPos(x+=1, y);
+			this->figureTexture->setPos(x += speed, y);
 		}
 		if (x > this->destX) {
-			this->figureTexture->setPos(x-=1, y);
+			this->figureTexture->setPos(x -= speed, y);
 		}
 		if (y < this->destY) {
-			this->figureTexture->setPos(x, y += 1);
+			this->figureTexture->setPos(x, y += speed);
 		}
 		if (y > this->destY) {
-			this->figureTexture->setPos(x, y -= 1);
+			this->figureTexture->setPos(x, y -= speed);
 		}
 	}
 	this->figureTexture->render();

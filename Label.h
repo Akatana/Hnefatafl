@@ -11,11 +11,7 @@ public:
 	Label(GameManager* manager);
 	Label(GameManager* manager, const char* file, const char* text, int size);
 
-	void setText(const char* file, const char* text,int size) {
-		this->textFile = file;
-		this->text = text;
-		this->textSize = size;
-	}
+	void setText(const char* file, const char* text, int size);
 
 	const char* getText() {
 		return this->text;

@@ -11,6 +11,7 @@ public:
 	Figure(GameManager* manager, int x, int y, int type);
 	Texture* getTexture() { return this->figureTexture; }
 	int getType() { return this->type; }
+	int getPlayer() { return this->player; }
 	int getXField() { return this->xField; }
 	int getYField() { return this->yField; }
 	void animate(bool start);
@@ -26,6 +27,8 @@ private:
 	int xField, yField;
 	//0 = black; 1 = white; 2 = king
 	int type;
+	//0 = black; 1 = white
+	int player;
 
 	//hover animation
 	bool startAnimation = false;
