@@ -34,7 +34,7 @@ Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 		}
 		y++;
 	}
-	this->moves.push_back(this->field);
+	this->lastMove = this->field;
 }
 
 void Field::setPos(int x, int y) {
@@ -363,6 +363,25 @@ void Field::handleEvents() {
 						this->selectedFigure->move(this->fieldTexture->getPos()->x + (field[0] * 36 + 2), this->fieldTexture->getPos()->y + (field[1] * 36 + 2));
 						this->field[{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }] = nullptr;
 						this->selectedFigure->setPos(field[0], field[1]);
+						//check if the king reached a corner
+						if (this->selectedFigure->getType() == 2) {
+							//top left
+							if (field[0] == 0 && field[1] == 0) {
+								this->finish = true;
+							}
+							//top right
+							if (field[0] == this->size - 1 && field[1] == 0) {
+								this->finish = true;
+							}
+							//bottom left
+							if (field[0] == 0 && field[1] == this->size - 1) {
+								this->finish = true;
+							}
+							//top left
+							if (field[0] == this->size - 1 && field[1] == this->size - 1) {
+								this->finish = true;
+							}
+						}
 						this->field[{ field[0], field[1] }] = this->selectedFigure;
 						this->checkSurroundingFields();
 						this->selectedFigure = nullptr;
@@ -372,7 +391,7 @@ void Field::handleEvents() {
 						else {
 							this->currentPlayer = 0;
 						}
-						//this->moves.emplace_back(this->field);
+						this->turns++;
 					}
 				}
 				this->selectedFigure = nullptr;

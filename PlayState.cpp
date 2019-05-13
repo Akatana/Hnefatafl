@@ -9,11 +9,11 @@ void PlayState::init(GameManager* manager) {
 	this->gameOverText = new Label(this->manager, "assets/fonts/viking2.ttf", "0", 50);
 	this->gameOverText->setPos(100, 100);
 	this->currentPlayer = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);
-	this->currentPlayer->setPos(100, 70);
+	this->currentPlayer->setPos(this->field->getPos()->x, this->field->getPos()->y - 30);
 	this->moveAmount = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);
-	this->moveAmount->setPos(420, 70);
+	this->moveAmount->setPos(this->field->getPos()->x + this->field->getPos()->w - 70, this->field->getPos()->y - 30);
 	this->infoText = new Label(this->manager, "assets/fonts/arial.ttf", "0", 25);
-	this->infoText->setPos(510, 100);
+	this->infoText->setPos(this->field->getPos()->x + this->field->getPos()->w + 10, this->field->getPos()->y);
 	printf("[INFO] PlayState was initialised\n");
 
 }
@@ -59,7 +59,7 @@ void PlayState::update() {
 	}
 	this->infoText->setText("assets/fonts/arial.ttf", this->field->getText().c_str(), 20);
 	this->currentPlayer->setText("assets/fonts/arial.ttf", ("Am Zug: " + currentPlayer).c_str(), 25);
-	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getMoves().size())).c_str(), 25);
+	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getTurns())).c_str(), 25);
 	this->field->update();
 }
 

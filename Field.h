@@ -17,7 +17,9 @@ public:
 	void setPos(int x, int y);
 	bool isFinished() { return this->finish;  }
 	int getCurrentPlayer() { return this->currentPlayer; }
-	std::vector<std::map<std::vector<int>, Figure*>> getMoves() { return this->moves; };
+	std::map<std::vector<int>, Figure*> getLastMove() { return this->lastMove; }
+	int getTurns() { return this->turns; }
+	SDL_Rect* getPos() { return this->fieldTexture->getPos(); }
 	std::string getText() { return this->text; };
 	void setField(std::map<std::vector<int>, Figure*> newField) { this->field = newField; }
 	void clean();
@@ -32,8 +34,9 @@ private:
 	Config* config;
 	Figure* selectedFigure;
 	int currentPlayer = 0;
+	int turns = 0;
 	bool finish = false;
-	std::vector<std::map<std::vector<int>, Figure*>> moves;
+	std::map<std::vector<int>, Figure*> lastMove;
 	std::map<std::vector<int>, Figure*> field;
 	std::string text;
 	int size;
