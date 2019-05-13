@@ -313,9 +313,8 @@ void Field::checkSurroundingFields() {
 	}
 }
 
-void Field::handleEvents() {
-	SDL_Event event;
-	SDL_PollEvent(&event);
+void Field::handleEvents(SDL_Event event) {
+	
 
 	if (this->selectedFigure != nullptr) {
 		if (this->selectedFigure->isMoving()) {

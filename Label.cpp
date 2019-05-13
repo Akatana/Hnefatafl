@@ -24,7 +24,6 @@ Label::Label(GameManager* manager, const char* file, const char* text, int size)
 	SDL_QueryTexture(this->textTexture, NULL, NULL, &textW, &textH);
 	this->rect.w = textW;
 	this->rect.h = textH;
-
 	this->textSize = size;
 	this->manager = manager;
 	this->text = text;
@@ -58,5 +57,10 @@ void Label::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha) {
 }
 
 void Label::render() {
-	SDL_RenderCopy(this->manager->getRenderer(), this->textTexture, NULL, &this->rect);
+	if (this->viewableArea.w == 0 && this->viewableArea.y == 0) {
+		SDL_RenderCopy(this->manager->getRenderer(), this->textTexture, NULL, &this->rect);
+	}
+	else {
+		SDL_RenderCopy(this->manager->getRenderer(), this->textTexture, &this->viewableArea, &this->rect);
+	}
 }

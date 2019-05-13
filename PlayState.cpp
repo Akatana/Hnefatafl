@@ -13,7 +13,11 @@ void PlayState::init(GameManager* manager) {
 	this->moveAmount = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);
 	this->moveAmount->setPos(this->field->getPos()->x + this->field->getPos()->w - 70, this->field->getPos()->y - 30);
 	this->infoText = new Label(this->manager, "assets/fonts/arial.ttf", "0", 25);
-	this->infoText->setPos(this->field->getPos()->x + this->field->getPos()->w + 10, this->field->getPos()->y);
+	this->infoText->setPos(this->field->getPos()->x + this->field->getPos()->w + 15, this->field->getPos()->y);
+	this->infoBackground.x = this->field->getPos()->x + this->field->getPos()->w + 10;
+	this->infoBackground.y = this->field->getPos()->y;
+	this->infoBackground.w = this->field->getPos()->w;
+	this->infoBackground.h = this->field->getPos()->h;
 	printf("[INFO] PlayState was initialised\n");
 
 }
@@ -31,18 +35,20 @@ void PlayState::resume() {
 }
 
 void PlayState::handleEvents() {
-	this->field->handleEvents();
-
 	SDL_Event event;
 	SDL_PollEvent(&event);
 
-	switch (event.type) {
-	case SDL_QUIT:
+	this->field->handleEvents(event);
+	if (event.type == SDL_QUIT) {
 		this->manager->quit();
-		break;
-
-	default:
-		break;
+	} 
+	if (event.type == SDL_MOUSEWHEEL) {
+		if (event.wheel.y == -1) {
+			this->infoText->setPos(this->infoText->getRect().x, this->infoText->getRect().y + 5);
+		}
+		else {
+			this->infoText->setPos(this->infoText->getRect().x, this->infoText->getRect().y - 5);
+		}
 	}
 }
 
@@ -57,7 +63,25 @@ void PlayState::update() {
 	if (this->field->isFinished()) {
 		this->gameOverText->setText("assets/fonts/viking2.ttf", (currentPlayer + " hat gewonnen!").c_str(), 50);
 	}
-	this->infoText->setText("assets/fonts/arial.ttf", this->field->getText().c_str(), 20);
+	std::string info = this->field->getText();
+	int counter = 0;
+	for (auto i : info) {
+		if (i == '\n') {
+			counter++;
+		}
+	}
+	if (counter > 17) {
+		int last = 0;
+		for (auto i : info) {
+			if (i == '\n' && counter > 17) {
+				info.erase(last, info.find("\n"));
+				last = info.find("\n");
+				counter--;
+			}
+		}
+	}
+	//this->field->getText().c_str()"a\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\nende\n"
+	this->infoText->setText("assets/fonts/arial.ttf", (info).c_str(), 20);
 	this->currentPlayer->setText("assets/fonts/arial.ttf", ("Am Zug: " + currentPlayer).c_str(), 25);
 	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getTurns())).c_str(), 25);
 	this->field->update();
@@ -70,6 +94,9 @@ void PlayState::render() {
 		this->field->render();
 		this->currentPlayer->render();
 		this->moveAmount->render();
+		SDL_SetRenderDrawBlendMode(this->manager->getRenderer(), SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(this->manager->getRenderer(), 255, 255, 255, 70);
+		SDL_RenderFillRect(this->manager->getRenderer(), &this->infoBackground);
 		this->infoText->render();
 	}
 	else {

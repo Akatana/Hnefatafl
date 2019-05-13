@@ -23,7 +23,7 @@ public:
 	std::string getText() { return this->text; };
 	void setField(std::map<std::vector<int>, Figure*> newField) { this->field = newField; }
 	void clean();
-	void handleEvents();
+	void handleEvents(SDL_Event event);
 	void update();
 	void render();
 

@@ -37,6 +37,8 @@ private:
 	Label* currentPlayer;
 	Label* moveAmount;
 	Label* infoText;
+	bool test = true;
+	SDL_Rect infoBackground = { 0, 0, 0, 0 };
 };
 
 #endif

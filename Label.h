@@ -31,6 +31,10 @@ public:
 		return this->rect;
 	}
 
+	void setView(SDL_Rect rect) {
+		this->viewableArea = rect;
+	}
+
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
 
 	void render();
@@ -41,6 +45,7 @@ private:
 	const char* text = "Text";
 	int textSize = 21;
 	SDL_Rect rect;
+	SDL_Rect viewableArea = { 0,0,0,0 };
 	SDL_Color color = { 0, 0, 0, 255 };
 	SDL_Texture* textTexture;
 };
