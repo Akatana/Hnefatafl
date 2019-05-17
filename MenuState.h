@@ -34,7 +34,9 @@ private:
 
 	//elements
 	Texture* backgroundTexture;
-	Button* button;
+	Button* playButton;
+	Button* optionsButton;
+	Button* quitButton;
 };
 
 #endif
