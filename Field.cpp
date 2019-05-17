@@ -359,6 +359,16 @@ void Field::handleEvents(SDL_Event event) {
 							this->text += "Weiß ging von {" + std::to_string(this->selectedFigure->getXField()) + ", " + std::to_string(this->selectedFigure->getYField())
 								+ "} zu {" + std::to_string(field[0]) + ", " + std::to_string(field[1]) + "}\n";
 						}
+						int counter = 0;
+						for (auto i : this->text) {
+							if (i == '\n') {
+								counter++;
+							}
+						}
+						//MAKE THIS DYNAMIC
+						if (counter > 17) {
+							this->text.erase(0, this->text.find("\n")+1);
+						}
 						this->selectedFigure->move(this->fieldTexture->getPos()->x + (field[0] * 36 + 2), this->fieldTexture->getPos()->y + (field[1] * 36 + 2));
 						this->field[{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }] = nullptr;
 						this->selectedFigure->setPos(field[0], field[1]);

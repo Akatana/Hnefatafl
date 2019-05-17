@@ -63,25 +63,9 @@ void PlayState::update() {
 	if (this->field->isFinished()) {
 		this->gameOverText->setText("assets/fonts/viking2.ttf", (currentPlayer + " hat gewonnen!").c_str(), 50);
 	}
-	std::string info = this->field->getText();
-	int counter = 0;
-	for (auto i : info) {
-		if (i == '\n') {
-			counter++;
-		}
-	}
-	if (counter > 17) {
-		int last = 0;
-		for (auto i : info) {
-			if (i == '\n' && counter > 17) {
-				info.erase(last, info.find("\n"));
-				last = info.find("\n");
-				counter--;
-			}
-		}
-	}
+	
 	//this->field->getText().c_str()"a\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\nende\n"
-	this->infoText->setText("assets/fonts/arial.ttf", (info).c_str(), 20);
+	this->infoText->setText("assets/fonts/arial.ttf", (this->field->getText()).c_str(), 20);
 	this->currentPlayer->setText("assets/fonts/arial.ttf", ("Am Zug: " + currentPlayer).c_str(), 25);
 	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getTurns())).c_str(), 25);
 	this->field->update();
