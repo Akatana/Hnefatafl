@@ -41,14 +41,6 @@ void PlayState::handleEvents() {
 	this->field->handleEvents(event);
 	if (event.type == SDL_QUIT) {
 		this->manager->quit();
-	} 
-	if (event.type == SDL_MOUSEWHEEL) {
-		if (event.wheel.y == -1) {
-			this->infoText->setPos(this->infoText->getRect().x, this->infoText->getRect().y + 5);
-		}
-		else {
-			this->infoText->setPos(this->infoText->getRect().x, this->infoText->getRect().y - 5);
-		}
 	}
 }
 

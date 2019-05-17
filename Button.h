@@ -17,8 +17,11 @@ class Button {
 public:
 	Button();
 	Button(GameManager* manager, const char* text, int w, int h, int xPos, int yPos, int spriteW, int spriteH);
-	void handleEvents(Action* action);
+	void handleEvents(SDL_Event event, Action* action);
+	void handleEvents(SDL_Event event);
 	void render();
+	bool isClicked() { return this->clicked; }
+	void setClicked(bool state) { this->clicked = state; }
 	void show() {
 		this->visible = true;
 	}
@@ -30,6 +33,7 @@ private:
 	GameManager* manager;
 	Label label;
 	bool visible = true;
+	bool clicked = false;
 	const char* text;
 	SDL_Rect clips[4];
 	SDL_Rect clip;

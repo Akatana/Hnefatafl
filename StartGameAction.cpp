@@ -3,7 +3,7 @@
 StartGameAction StartGameAction::action;
 
 void StartGameAction::execute() {
-
+	printf("asdasd");
 }
 
 void StartGameAction::execute(GameManager* manager) {

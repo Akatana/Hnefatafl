@@ -24,10 +24,10 @@ void MenuState::resume() {
 }
 
 void MenuState::handleEvents() {
-	this->button->handleEvents(StartGameAction::Instance());
-
 	SDL_Event event;
 	SDL_PollEvent(&event);
+	
+	this->button->handleEvents(event, StartGameAction::Instance());
 
 	switch (event.type) {
 	case SDL_QUIT:

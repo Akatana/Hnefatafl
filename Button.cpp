@@ -42,11 +42,9 @@ Button::Button(GameManager* manager, const char* text, int w, int h, int xPos, i
 	}
 }
 
-void Button::handleEvents(Action* action) {
+void Button::handleEvents(SDL_Event event, Action* action) {
 	int x = 0, y = 0;
 	SDL_Rect* rect = this->texture.getPos();
-	SDL_Event event;
-	SDL_PollEvent(&event);
 
 	if (event.type == SDL_MOUSEMOTION) {
 		x = event.motion.x;
@@ -65,6 +63,31 @@ void Button::handleEvents(Action* action) {
 		y = event.button.y;
 		if (x > rect->x && x < rect->x + rect->w && y > rect->y && y < rect->y + rect->h) {
 			action->execute(this->manager);
+		}
+	}
+}
+
+void Button::handleEvents(SDL_Event event) {
+	int x = 0, y = 0;
+	SDL_Rect* rect = this->texture.getPos();
+
+	if (event.type == SDL_MOUSEMOTION) {
+		x = event.motion.x;
+		y = event.motion.y;
+
+		if (x > rect->x && x < rect->x + rect->w && y > rect->y && y < rect->y + rect->h) {
+			this->clip = this->clips[CLIP_MOUSEOVER];
+		}
+		else {
+			this->clip = this->clips[CLIP_MOUSEOUT];
+		}
+
+	}
+	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		x = event.button.x;
+		y = event.button.y;
+		if (x > rect->x && x < rect->x + rect->w && y > rect->y && y < rect->y + rect->h) {
+			this->clicked = true;
 		}
 	}
 }
