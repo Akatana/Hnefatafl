@@ -4,10 +4,21 @@ MenuState MenuState::menuState;
 
 void MenuState::init(GameManager* manager) {
 	this->manager = manager;
-	this->playButton = new Button(this->manager, "Spielen", 192, 64, 200, 200, 192, 64);
+	this->playButton = new Button(this->manager, "Hnefatafl", 192, 64, 200, 200, 192, 64);
 	this->optionsButton = new Button(this->manager, "Optionen", 192, 64, 200, 280, 192, 64);
 	this->quitButton = new Button(this->manager, "Beenden", 192, 64, 200, 360, 192, 64);
 	this->backgroundTexture = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
+	this->levelSelectTexture = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 200, 600);
+	this->levelSelectTexture->setPos(400, 0);
+
+	//Set up gamemodes
+	int yPos = 30;
+	for (const auto &entry : std::filesystem::directory_iterator("assets/levels")) {
+		Button* button = new Button(this->manager, entry.path().stem().string().c_str(), 150, 40, 425, yPos, 192, 64);
+		this->gameModes.push_back(button);
+		yPos += 45;
+	}
+
 	printf("[INFO] MenuState was initialised\n");
 }
 
@@ -37,16 +48,17 @@ void MenuState::handleEvents() {
 	
 	//check for button presses
 	if (this->playButton->isClicked()) {
-		this->manager->changeState(PlayState::Instance());
 		this->playButton->setClicked(false);
+		this->levelSelection = true;
+		//this->manager->changeState(PlayState::Instance());
 	}
 	else if (this->optionsButton->isClicked()) {
-		printf("clicked on options\n");
 		this->optionsButton->setClicked(false);
+		printf("clicked on options\n");
 	}
 	else if (this->quitButton->isClicked()) {
-		this->manager->quit();
 		this->quitButton->setClicked(false);
+		this->manager->quit();
 	}
 
 	switch (event.type) {
@@ -60,14 +72,21 @@ void MenuState::handleEvents() {
 }
 
 void MenuState::update() {
-	//this->manager->changeState(PlayState::Instance());
+	
 }
 
 void MenuState::render() {
 	SDL_RenderClear(this->manager->getRenderer());
-	backgroundTexture->render();
+	this->backgroundTexture->render();
 	this->playButton->render();
 	this->optionsButton->render();
 	this->quitButton->render();
+	if (this->levelSelection) {
+		this->backgroundTexture->render();
+		this->levelSelectTexture->render();
+		for (const auto &button : this->gameModes) {
+			button->render();
+		}
+	}
 	SDL_RenderPresent(this->manager->getRenderer());
 }

@@ -8,6 +8,8 @@
 #include "Texture.h"
 #include "Button.h"
 #include "StartGameAction.h"
+#include <iostream>
+#include <filesystem>
 
 class MenuState : public GameState {
 public:
@@ -31,9 +33,12 @@ protected:
 private:
 	static MenuState menuState;
 	GameManager* manager;
+	bool levelSelection = false;
 
 	//elements
+	std::vector<Button*> gameModes;
 	Texture* backgroundTexture;
+	Texture* levelSelectTexture;
 	Button* playButton;
 	Button* optionsButton;
 	Button* quitButton;

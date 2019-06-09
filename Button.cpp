@@ -25,6 +25,7 @@ Button::Button(GameManager* manager, const char* text, int w, int h, int xPos, i
 	clips[CLIP_MOUSEUP].x = spriteW;
 	clips[CLIP_MOUSEUP].y = spriteH;
 	clips[CLIP_MOUSEUP].w = spriteW;
+
 	clips[CLIP_MOUSEUP].h = spriteH;
 	this->manager = manager;
 	this->texture = Texture(this->manager->getRenderer(), "assets/images/button.png", w, h);
@@ -33,12 +34,16 @@ Button::Button(GameManager* manager, const char* text, int w, int h, int xPos, i
 	this->clip = clips[CLIP_MOUSEOUT];
 
 	this->label = Label(this->manager, "assets/fonts/viking2.ttf", this->text, 50);
+	int fontSize = 50;
+	while (this->label.getRect().w > w || this->label.getRect().h > h) {
+		this->label = Label(this->manager, "assets/fonts/viking2.ttf", this->text, fontSize--);
+	}
 	SDL_Rect size = this->label.getRect();
-	if (size.w > this->clip.w || size.h > this->clip.h) {
+	if (size.w > w || size.h > h) {
 		this->label.setPos(xPos, yPos);
 	}
 	else {
-		this->label.setPos(xPos + ((this->clip.w - size.w) / 2), yPos + ((this->clip.h - size.h) / 2));
+		this->label.setPos(xPos + ((w - size.w) / 2), yPos + ((h - size.h) / 2));
 	}
 }
 

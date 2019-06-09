@@ -53,6 +53,13 @@ void PlayState::update() {
 		currentPlayer = "Weiß";
 	}
 	if (this->field->isFinished()) {
+		//Invert the current player to get the winner
+		if (currentPlayer == "Weiß") {
+			currentPlayer = "Schwarz";
+		}
+		else {
+			currentPlayer = "Weiß";
+		}
 		this->gameOverText->setText("assets/fonts/viking2.ttf", (currentPlayer + " hat gewonnen!").c_str(), 50);
 	}
 	
@@ -66,6 +73,7 @@ void PlayState::update() {
 void PlayState::render() {
 	SDL_RenderClear(this->manager->getRenderer());
 	this->background->render();
+	//Game is running
 	if (!this->field->isFinished()) {
 		this->field->render();
 		this->currentPlayer->render();
@@ -75,6 +83,7 @@ void PlayState::render() {
 		SDL_RenderFillRect(this->manager->getRenderer(), &this->infoBackground);
 		this->infoText->render();
 	}
+	//Game is over
 	else {
 		this->gameOverText->render();
 	}
