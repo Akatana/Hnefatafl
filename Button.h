@@ -22,6 +22,8 @@ public:
 	void render();
 	bool isClicked() { return this->clicked; }
 	void setClicked(bool state) { this->clicked = state; }
+	void setText(std::string text) { this->title = text; }
+	std::string getText() { return this->title; }
 	void show() {
 		this->visible = true;
 	}
@@ -35,6 +37,7 @@ private:
 	bool visible = true;
 	bool clicked = false;
 	const char* text;
+	std::string title;
 	SDL_Rect clips[4];
 	SDL_Rect clip;
 	Texture texture;

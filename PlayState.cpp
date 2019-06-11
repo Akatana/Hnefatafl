@@ -5,7 +5,7 @@ PlayState PlayState::playState;
 void PlayState::init(GameManager* manager) {
 	this->manager = manager;
 	this->background = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
-	this->field = new Field(this->manager, "assets/levels/Hnefatafl.json", 100, 100);
+	this->field = new Field(this->manager, this->manager->getLevelFile().c_str(), 100, 100);
 	this->gameOverText = new Label(this->manager, "assets/fonts/viking2.ttf", "0", 50);
 	this->gameOverText->setPos(100, 100);
 	this->currentPlayer = new Label(this->manager, "assets/fonts/arial.ttf", "0", 30);

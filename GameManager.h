@@ -38,10 +38,19 @@ public:
 
 	int getTime() { return this->time; }
 
+	void setLevelFile(std::string file) {
+		this->levelFile = file;
+	}
+
+	std::string getLevelFile() {
+		return this->levelFile;
+	}
+
 private:
 	std::vector<GameState*> states;
 	int time;
 	bool isRunning;
+	std::string levelFile;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 };
