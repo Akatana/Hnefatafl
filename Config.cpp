@@ -17,6 +17,10 @@ Config::Config(const char* file) {
 	}
 }
 
+int Config::getInt(const char* key) {
+	return j.at(key).get<int>();
+}
+
 std::string Config::getString(const char* key) {
 	return j.at(key).get<std::string>();
 }

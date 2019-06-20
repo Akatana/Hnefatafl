@@ -7,6 +7,7 @@
 #include "PlayState.h"
 #include "Texture.h"
 #include "Button.h"
+#include "Label.h"
 #include "StartGameAction.h"
 #include <iostream>
 #include <filesystem>
@@ -42,6 +43,7 @@ private:
 	Button* playButton;
 	Button* optionsButton;
 	Button* quitButton;
+	Label* levelSelectTitle;
 };
 
 #endif

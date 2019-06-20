@@ -3,7 +3,8 @@
 Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 	this->manager = manager;
 	this->config = new Config(file);
-	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), 396, 396);
+	int fieldSize = this->config->getInt("fieldSize");
+	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), fieldSize, fieldSize);
 	this->fieldTexture->setPos(xPos, yPos);
 	std::vector<std::string> tmpField = this->config->getStringArray("field");
 	this->size = tmpField.size();

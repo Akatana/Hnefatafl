@@ -16,8 +16,8 @@ void PlayState::init(GameManager* manager) {
 	this->infoText->setPos(this->field->getPos()->x + this->field->getPos()->w + 15, this->field->getPos()->y);
 	this->infoBackground.x = this->field->getPos()->x + this->field->getPos()->w + 10;
 	this->infoBackground.y = this->field->getPos()->y;
-	this->infoBackground.w = this->field->getPos()->w;
-	this->infoBackground.h = this->field->getPos()->h;
+	this->infoBackground.w = 396;
+	this->infoBackground.h = 396;
 	printf("[INFO] PlayState was initialised\n");
 
 }

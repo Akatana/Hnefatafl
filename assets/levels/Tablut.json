@@ -1,17 +1,16 @@
 {
     "field": [
-        "           ",
-	"     +     ",
-	"           ",
-	"     -     ",
-	"    ---    ",
-	" + --#-- + ",
-	"    ---    ",
-	"     -     ",
-	"           ",
-	"     +     ",
-	"           "
+        "   +++   ",
+        "    +    ",
+        "    -    ",
+        "+   -   +",
+        "++--#--++",
+        "+   -   +",
+        "    -    ",
+        "    +    ",
+        "   +++   "
     ],
     "name": "Tablut",
-    "fieldImg": "assets/images/field.png"
+    "fieldImg": "assets/images/Tablut.png",
+    "fieldSize": 324
 }
