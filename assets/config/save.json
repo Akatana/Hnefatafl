@@ -1,0 +1,15 @@
+{
+    "currentPlayer": 0,
+    "field": [
+        "   +++   ",
+        "  +   +  ",
+        " +- - -  ",
+        "+  ---  +",
+        "+  -#-  +",
+        "+  -- - +",
+        " + + + + ",
+        "  +   +  ",
+        "    +    "
+    ],
+    "fieldImg": "assets/images/Tablut.png"
+}

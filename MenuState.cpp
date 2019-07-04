@@ -26,10 +26,17 @@ void MenuState::init(GameManager* manager) {
 }
 
 void MenuState::clean() {
+	SDL_DestroyTexture(this->backgroundTexture->getTexture());
+	SDL_DestroyTexture(this->levelSelectTexture->getTexture());
 	free(this->playButton);
 	free(this->optionsButton);
 	free(this->quitButton);
 	free(this->backgroundTexture);
+	free(this->levelSelectTexture);
+	for (const auto &button : this->gameModes) {
+		button->clean();
+	}
+	this->gameModes.clear();
 	printf("[INFO] MenuState was cleaned\n");
 }
 
@@ -68,6 +75,7 @@ void MenuState::handleEvents() {
 			button->handleEvents(event);
 			if (button->isClicked()) {
 				button->setClicked(false);
+				this->levelSelection = false;
 				this->manager->setLevelFile("assets/levels/" + button->getText() + ".json");
 				this->manager->changeState(PlayState::Instance());
 			}

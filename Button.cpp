@@ -47,6 +47,11 @@ Button::Button(GameManager* manager, const char* text, int w, int h, int xPos, i
 	}
 }
 
+void Button::clean() {
+	SDL_DestroyTexture(this->texture.getTexture());
+	this->label.clean();
+}
+
 void Button::handleEvents(SDL_Event event, Action* action) {
 	int x = 0, y = 0;
 	SDL_Rect* rect = this->texture.getPos();

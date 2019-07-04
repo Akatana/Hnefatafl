@@ -8,6 +8,10 @@
 #include "Figure.h"
 #include "Texture.h"
 #include "Config.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include "json.hpp"
 
 class Field {
 public:
@@ -26,6 +30,8 @@ public:
 	void handleEvents(SDL_Event event);
 	void update();
 	void render();
+	void saveGame();
+	void loadGame();
 
 private:
 	//Variables
@@ -40,6 +46,8 @@ private:
 	std::map<std::vector<int>, Figure*> field;
 	std::string text;
 	int size;
+	int xPos;
+	int yPos;
 	std::array<SDL_Rect,4> availableFields;
 
 	//methods

@@ -133,6 +133,8 @@
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="OptionsState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="StartGameAction.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -148,6 +150,8 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="OptionsState.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="StartGameAction.h" />
     <ClInclude Include="Texture.h" />

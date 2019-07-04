@@ -10,7 +10,7 @@ public:
 	Label();
 	Label(GameManager* manager);
 	Label(GameManager* manager, const char* file, const char* text, int size);
-
+	void clean();
 	void setText(const char* file, const char* text, int size);
 
 	const char* getText() {

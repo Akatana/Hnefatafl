@@ -3,21 +3,24 @@
 Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 	this->manager = manager;
 	this->config = new Config(file);
-	int fieldSize = this->config->getInt("fieldSize");
-	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), fieldSize, fieldSize);
-	this->fieldTexture->setPos(xPos, yPos);
 	std::vector<std::string> tmpField = this->config->getStringArray("field");
 	this->size = tmpField.size();
+	int fieldSize = this->size * 36;
+	this->xPos = xPos;
+	this->yPos = yPos;
+	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), fieldSize, fieldSize);
+	this->fieldTexture->setPos(xPos, yPos);
+	
 	int y = 0;
 	for (auto &line : tmpField) {
 		for (int x = 0; x < this->size; x++) {
-			//Black
+			//attacker
 			if (line.at(x) == '+') {
 				Figure* fig = new Figure(this->manager, x, y, 0);
 				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
 				this->field.insert(std::pair<std::vector<int>, Figure*>({x,y}, fig));
 			}
-			//white
+			//defender
 			else if (line.at(x) == '-') {
 				Figure* fig = new Figure(this->manager, x, y, 1);
 				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
@@ -43,7 +46,16 @@ void Field::setPos(int x, int y) {
 }
 
 void Field::clean() {
-
+	SDL_DestroyTexture(this->fieldTexture->getTexture());
+	free(this->fieldTexture);
+	for (auto const& [key, val] : this->field) {
+		if (val != nullptr) {
+			SDL_DestroyTexture(val->getSDLTexture());
+		}
+		free(val);
+	}
+	this->field.clear();
+	this->lastMove.clear();
 }
 
 void Field::checkAvailableFields() {
@@ -117,6 +129,78 @@ void Field::checkAvailableFields() {
 	this->availableFields[3].w = 36;
 	this->availableFields[3].x = this->fieldTexture->getPos()->x + (x * 36);
 	this->availableFields[3].y = this->fieldTexture->getPos()->y + (y * 36) + 36;
+}
+
+void Field::saveGame() {
+	std::vector<std::string> saveField;
+	nlohmann::json json;
+	std::string fieldImg;
+	for (int y = 0; y < this->size; y++) {
+		std::string line;
+		for (int x = 0; x < this->size; x++) {
+			if (this->field.at({ x,y }) != nullptr) {
+				if (this->field.at({ x,y })->getType() == 0) {
+					line.append("+");
+				}
+				else if (this->field.at({ x,y })->getType() == 1) {
+					line.append("-");
+				}
+				else if (this->field.at({ x,y })->getType() == 2) {
+					line.append("#");
+				}
+			}
+			else {
+				line.append(" ");
+			}
+		}
+		saveField.push_back(line);
+	}
+	json["field"] = saveField;
+	json["currentPlayer"] = this->getCurrentPlayer();
+	json["fieldImg"] = this->config->getString("fieldImg");
+	std::ofstream o("assets/config/save.json");
+	o << std::setw(4) << json << std::endl;
+	printf("[INFO] Game was saved!\n");
+}
+
+void Field::loadGame() {
+	this->field.clear();
+	this->lastMove.clear();
+	this->config = new Config("assets/config/save.json");
+	std::vector<std::string> tmpField = this->config->getStringArray("field");
+	this->size = tmpField.size();
+	int fieldSize = this->size * 36;
+
+	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), fieldSize, fieldSize);
+	this->fieldTexture->setPos(this->xPos, this->yPos);
+	int y = 0;
+	for (auto &line : tmpField) {
+		for (int x = 0; x < this->size; x++) {
+			//attacker
+			if (line.at(x) == '+') {
+				Figure* fig = new Figure(this->manager, x, y, 0);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
+			}
+			//defender
+			else if (line.at(x) == '-') {
+				Figure* fig = new Figure(this->manager, x, y, 1);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
+			}
+			//king
+			else if (line.at(x) == '#') {
+				Figure* fig = new Figure(this->manager, x, y, 2);
+				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
+			}
+			else {
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, nullptr));
+			}
+		}
+		y++;
+	}
+	this->currentPlayer = this->config->getInt("currentPlayer");
 }
 
 std::array<int, 2> Field::getFieldOnPoint(int x, int y) {

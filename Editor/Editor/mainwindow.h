@@ -45,6 +45,7 @@ private:
     QGridLayout *layout;
     int levelSize = 9;
     QString levelName;
+    QString fileName;
     int selectedFigure = 0;
     QPixmap attackerFile = QPixmap(":/images/attacker.png");
     QIcon attackerIcon = QIcon(this->attackerFile);

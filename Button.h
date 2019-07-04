@@ -17,6 +17,7 @@ class Button {
 public:
 	Button();
 	Button(GameManager* manager, const char* text, int w, int h, int xPos, int yPos, int spriteW, int spriteH);
+	void clean();
 	void handleEvents(SDL_Event event, Action* action);
 	void handleEvents(SDL_Event event);
 	void render();

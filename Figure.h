@@ -14,6 +14,7 @@ public:
 	int getPlayer() { return this->player; }
 	int getXField() { return this->xField; }
 	int getYField() { return this->yField; }
+	SDL_Texture* getSDLTexture() { return this->figureTexture->getTexture(); }
 	void animate(bool start);
 	void move(int destX, int destY);
 	void setPos(int x, int y);

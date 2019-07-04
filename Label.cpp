@@ -30,6 +30,10 @@ Label::Label(GameManager* manager, const char* file, const char* text, int size)
 	this->textFile = file;
 }
 
+void Label::clean() {
+	SDL_DestroyTexture(this->textTexture);
+}
+
 void Label::setText(const char* file, const char* text, int size) {
 	SDL_DestroyTexture(this->textTexture);
 	this->textFile = file;

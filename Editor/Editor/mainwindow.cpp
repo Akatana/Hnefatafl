@@ -128,6 +128,7 @@ void MainWindow::on_actionSpeichern_triggered()
     }
     level["field"] = figures;
     level["name"] = this->levelName.toStdString();
+    level["fieldImg"] = "assets/images/"+nl->getFileName().toStdString();
     std::string saveFile = "../assets/levels/" + this->levelName.toStdString() + ".json";
     std::ofstream file(saveFile);
     file << std::setw(4) << level << std::endl;

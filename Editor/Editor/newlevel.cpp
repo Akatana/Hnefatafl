@@ -20,6 +20,7 @@ void NewLevel::on_createButton_clicked()
 {
     this->levelName = ui->lineEdit->text();
     this->levelSize = ui->spinBox->value();
+    QFile::copy(this->filePath, "../assets/images/"+this->fileName);
     emit this->finished();
     this->close();
 }
@@ -31,3 +32,13 @@ void NewLevel::on_cancelButton_clicked()
 }
 
 
+
+void NewLevel::on_toolButton_clicked()
+{
+    this->filePath = QFileDialog::getOpenFileName(this, tr("Datei auswählen"),
+                                                    ".png",
+                                                    tr("Images (*.png)"));
+    QFileInfo info(this->filePath);
+    this->fileName = info.fileName();
+    ui->bgImage->setText(info.fileName());
+}

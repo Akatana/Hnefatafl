@@ -2,6 +2,9 @@
 #define NEWLEVEL_H
 
 #include <QDialog>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QFile>
 
 namespace Ui {
 class NewLevel;
@@ -17,6 +20,9 @@ public:
     QString getLevelName() {
         return this->levelName;
     }
+    QString getFileName() {
+        return this->fileName;
+    }
     int getLevelSize() {
         return this->levelSize;
     }
@@ -24,6 +30,7 @@ public:
 private slots:
     void on_createButton_clicked();
     void on_cancelButton_clicked();
+    void on_toolButton_clicked();
 
 signals:
     void finished();
@@ -33,6 +40,8 @@ private:
     Ui::NewLevel *ui;
     QString levelName;
     int levelSize = 9;
+    QString filePath;
+    QString fileName;
 };
 
 #endif // NEWLEVEL_H

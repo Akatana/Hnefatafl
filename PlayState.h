@@ -4,9 +4,11 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "GameState.h"
+#include "MenuState.h"
 #include "GameManager.h"
 #include "Texture.h"
 #include "Label.h"
+#include "Button.h"
 #include "Field.h"
 
 class PlayState : public GameState {
@@ -33,11 +35,19 @@ private:
 	GameManager* manager;
 	Field* field;
 	Texture* background;
+	Texture* pauseTexture;
 	Label* gameOverText;
 	Label* currentPlayer;
 	Label* moveAmount;
 	Label* infoText;
-	bool test = true;
+	Label* pauseText;
+	Button* menuButton;
+	Button* returnButton;
+	Button* saveButton;
+	Button* loadButton;
+	Button* exitButton;
+	bool paused = false;
+
 	SDL_Rect infoBackground = { 0, 0, 0, 0 };
 };
 

@@ -56,6 +56,12 @@
     <ClCompile Include="Figure.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsState.cpp">
+      <Filter>src\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -96,6 +102,12 @@
     </ClInclude>
     <ClInclude Include="Figure.h">
       <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsState.h">
+      <Filter>src\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
