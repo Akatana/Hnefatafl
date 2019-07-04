@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Hnefatafl Editor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/images/attacker.png</normaloff>:/images/attacker.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHnefatafl_Editor">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <addaction name="actionNeu"/>
+    <addaction name="actionSpeichern"/>
+   </widget>
+   <addaction name="menuHnefatafl_Editor"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAngreifer"/>
+   <addaction name="actionVerteidiger"/>
+   <addaction name="actionKoenig"/>
+   <addaction name="actionEntfernen"/>
+  </widget>
+  <action name="actionNeu">
+   <property name="text">
+    <string>Neu</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionSpeichern">
+   <property name="text">
+    <string>Speichern</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionAngreifer">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/attacker.png</normaloff>:/images/attacker.png</iconset>
+   </property>
+   <property name="text">
+    <string>Angreifer</string>
+   </property>
+   <property name="toolTip">
+    <string>Angreifer platzieren</string>
+   </property>
+  </action>
+  <action name="actionVerteidiger">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/defender.png</normaloff>
+     <normalon>../../assets/images/figures/set1_defender.png</normalon>:/images/defender.png</iconset>
+   </property>
+   <property name="text">
+    <string>Verteidiger</string>
+   </property>
+   <property name="toolTip">
+    <string>Verteidiger platzieren</string>
+   </property>
+  </action>
+  <action name="actionKoenig">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/king.png</normaloff>
+     <normalon>../../assets/images/figures/set1_king.png</normalon>:/images/king.png</iconset>
+   </property>
+   <property name="text">
+    <string>Koenig</string>
+   </property>
+   <property name="toolTip">
+    <string>König platzieren</string>
+   </property>
+  </action>
+  <action name="actionEntfernen">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/Eraser.png</normaloff>:/images/Eraser.png</iconset>
+   </property>
+   <property name="text">
+    <string>Entfernen</string>
+   </property>
+   <property name="toolTip">
+    <string>Figuren entfernen</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections/>
+</ui>

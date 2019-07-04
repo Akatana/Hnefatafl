@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>attacker.png</file>
+        <file>defender.png</file>
+        <file>king.png</file>
+        <file>Eraser.png</file>
+    </qresource>
+</RCC>

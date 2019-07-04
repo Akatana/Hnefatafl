@@ -10,7 +10,7 @@ void MenuState::init(GameManager* manager) {
 	this->backgroundTexture = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
 	this->levelSelectTexture = new Texture(this->manager->getRenderer(), "assets/images/levelSelect.png", 200, 600);
 	this->levelSelectTexture->setPos(400, 0);
-	this->levelSelectTitle = new Label(this->manager, "assets/fonts/viking2.ttf", "Felder", 40);
+	this->levelSelectTitle = new Label(this->manager, "assets/fonts/viking2.ttf", "Level", 40);
 	this->levelSelectTitle->setPos(500 - (this->levelSelectTitle->getRect().w/2), 16);
 
 	//Set up gamemodes
