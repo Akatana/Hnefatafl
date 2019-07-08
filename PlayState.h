@@ -46,6 +46,7 @@ private:
 	Button* saveButton;
 	Button* loadButton;
 	Button* exitButton;
+	Button* endButton;
 	bool paused = false;
 
 	SDL_Rect infoBackground = { 0, 0, 0, 0 };

@@ -7,7 +7,8 @@
 #include "GameManager.h"
 #include "Texture.h"
 #include "Label.h"
-#include "Field.h"
+#include "Button.h"
+#include "Config.h"
 
 class OptionsState : public GameState {
 public:
@@ -31,7 +32,18 @@ protected:
 private:
 	static OptionsState optionsState;
 	GameManager* manager;
+	Config* config;
+	Label* title;
 	Texture* backgroundTexture;
+	Texture* set1Attacker;
+	Texture* set1Defender;
+	Texture* set1King;
+	Texture* set2Attacker;
+	Texture* set2Defender;
+	Texture* set2King;
+	Button* set1Button;
+	Button* set2Button;
+	Button* backButton;
 };
 
 #endif

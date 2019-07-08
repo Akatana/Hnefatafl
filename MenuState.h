@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "GameManager.h"
 #include "PlayState.h"
+#include "OptionsState.h"
 #include "Texture.h"
 #include "Button.h"
 #include "Label.h"

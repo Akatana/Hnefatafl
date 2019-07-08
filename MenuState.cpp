@@ -7,7 +7,7 @@ void MenuState::init(GameManager* manager) {
 	this->playButton = new Button(this->manager, "Spielen", 192, 64, 200, 200, 192, 64);
 	this->optionsButton = new Button(this->manager, "Optionen", 192, 64, 200, 280, 192, 64);
 	this->quitButton = new Button(this->manager, "Beenden", 192, 64, 200, 360, 192, 64);
-	this->backgroundTexture = new Texture(this->manager->getRenderer(), "assets/images/bg_brown.png", 1000, 600);
+	this->backgroundTexture = new Texture(this->manager->getRenderer(), "assets/images/title.png", 1000, 600);
 	this->levelSelectTexture = new Texture(this->manager->getRenderer(), "assets/images/levelSelect.png", 200, 600);
 	this->levelSelectTexture->setPos(400, 0);
 	this->levelSelectTitle = new Label(this->manager, "assets/fonts/viking2.ttf", "Level", 40);
@@ -63,6 +63,7 @@ void MenuState::handleEvents() {
 	}
 	else if (this->optionsButton->isClicked()) {
 		this->optionsButton->setClicked(false);
+		this->manager->pushState(OptionsState::Instance());
 	}
 	else if (this->quitButton->isClicked()) {
 		this->quitButton->setClicked(false);

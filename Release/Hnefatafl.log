@@ -1,0 +1,24 @@
+﻿  Button.cpp
+d:\coding\padi\hnefatafl\hnefatafl\button.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  Field.cpp
+d:\coding\padi\hnefatafl\hnefatafl\gamemanager.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  Figure.cpp
+d:\coding\padi\hnefatafl\hnefatafl\gamemanager.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  GameManager.cpp
+d:\coding\padi\hnefatafl\hnefatafl\gamemanager.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  Label.cpp
+d:\coding\padi\hnefatafl\hnefatafl\label.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  main.cpp
+d:\coding\padi\hnefatafl\hnefatafl\gamemanager.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  MenuState.cpp
+d:\coding\padi\hnefatafl\hnefatafl\menustate.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  OptionsState.cpp
+d:\coding\padi\hnefatafl\hnefatafl\optionsstate.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  PauseState.cpp
+d:\coding\padi\hnefatafl\hnefatafl\pausestate.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  PlayState.cpp
+d:\coding\padi\hnefatafl\hnefatafl\playstate.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  StartGameAction.cpp
+d:\coding\padi\hnefatafl\hnefatafl\gamemanager.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory
+  Texture.cpp
+d:\coding\padi\hnefatafl\hnefatafl\texture.h(4): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "SDL.h": No such file or directory

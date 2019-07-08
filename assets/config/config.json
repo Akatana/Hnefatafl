@@ -1,5 +1,5 @@
 {
-    "blackFigure": "assets/images/figures/set1_attacker.png",
-    "whiteFigure": "assets/images/figures/set1_defender.png",
-    "kingFigure": "assets/images/figures/set1_king.png"
+    "blackFigure": "assets/images/figures/set2_attacker.png",
+    "kingFigure": "assets/images/figures/set2_king.png",
+    "whiteFigure": "assets/images/figures/set2_defender.png"
 }

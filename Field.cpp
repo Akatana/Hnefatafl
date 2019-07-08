@@ -10,7 +10,7 @@ Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 	this->yPos = yPos;
 	this->fieldTexture = new Texture(this->manager->getRenderer(), this->config->getString("fieldImg").c_str(), fieldSize, fieldSize);
 	this->fieldTexture->setPos(xPos, yPos);
-	
+
 	int y = 0;
 	for (auto &line : tmpField) {
 		for (int x = 0; x < this->size; x++) {
@@ -18,7 +18,7 @@ Field::Field(GameManager* manager, const char* file, int xPos, int yPos) {
 			if (line.at(x) == '+') {
 				Figure* fig = new Figure(this->manager, x, y, 0);
 				fig->getTexture()->setPos(this->fieldTexture->getPos()->x + (fig->getXField() * 36) + 2, this->fieldTexture->getPos()->y + (fig->getYField() * 36) + 2);
-				this->field.insert(std::pair<std::vector<int>, Figure*>({x,y}, fig));
+				this->field.insert(std::pair<std::vector<int>, Figure*>({ x,y }, fig));
 			}
 			//defender
 			else if (line.at(x) == '-') {
@@ -48,7 +48,7 @@ void Field::setPos(int x, int y) {
 void Field::clean() {
 	SDL_DestroyTexture(this->fieldTexture->getTexture());
 	free(this->fieldTexture);
-	for (auto const& [key, val] : this->field) {
+	for (auto const&[key, val] : this->field) {
 		if (val != nullptr) {
 			SDL_DestroyTexture(val->getSDLTexture());
 		}
@@ -66,7 +66,7 @@ void Field::checkAvailableFields() {
 	int x = this->selectedFigure->getXField();
 	int y = this->selectedFigure->getYField();
 	//Fields left to the selected figure
-	for (int xNeg = x-1; xNeg >= 0; xNeg--) {
+	for (int xNeg = x - 1; xNeg >= 0; xNeg--) {
 		//ignore corners
 		if (((xNeg == 0 && y == 0) || (xNeg == 0 && y == this->size - 1)) && this->selectedFigure->getType() != 2) {
 			break;
@@ -79,12 +79,12 @@ void Field::checkAvailableFields() {
 		}
 	}
 	this->availableFields[0].h = 36;
-	this->availableFields[0].x = this->fieldTexture->getPos()->x + (x*36) - this->availableFields[0].w;
-	this->availableFields[0].y = this->fieldTexture->getPos()->y + (y*36);
+	this->availableFields[0].x = this->fieldTexture->getPos()->x + (x * 36) - this->availableFields[0].w;
+	this->availableFields[0].y = this->fieldTexture->getPos()->y + (y * 36);
 	//Fields right to the selected figure
 	for (int xPos = x + 1; xPos < this->size; xPos++) {
 		//ignore corners if the king is not selected
-		if (((xPos == this->size-1 && y == this->size-1) || (xPos == this->size - 1 && y == 0)) && this->selectedFigure->getType() != 2) {
+		if (((xPos == this->size - 1 && y == this->size - 1) || (xPos == this->size - 1 && y == 0)) && this->selectedFigure->getType() != 2) {
 			break;
 		}
 		if (this->field.at({ xPos, y }) == nullptr) {
@@ -166,6 +166,7 @@ void Field::saveGame() {
 void Field::loadGame() {
 	this->field.clear();
 	this->lastMove.clear();
+	this->finish = false;
 	this->config = new Config("assets/config/save.json");
 	std::vector<std::string> tmpField = this->config->getStringArray("field");
 	this->size = tmpField.size();
@@ -222,7 +223,7 @@ std::array<int, 2> Field::getFieldOnPoint(int x, int y) {
 
 void Field::checkSurroundingFields() {
 	//look for figures
-	
+
 	int x = this->selectedFigure->getXField();
 	int y = this->selectedFigure->getYField();
 
@@ -265,7 +266,7 @@ void Field::checkSurroundingFields() {
 				}
 			}
 			else {
-				if (this->field.at({ x + 1, y - 1 }) != nullptr && this->field.at({ x + 1, y + 1 }) != nullptr && this->field.at({ x + 2, y}) != nullptr) {
+				if (this->field.at({ x + 1, y - 1 }) != nullptr && this->field.at({ x + 1, y + 1 }) != nullptr && this->field.at({ x + 2, y }) != nullptr) {
 					if (this->field.at({ x + 1, y - 1 })->getPlayer() == this->currentPlayer && this->field.at({ x + 1, y + 1 })->getPlayer() == this->currentPlayer && this->field.at({ x + 2, y })->getPlayer() == this->currentPlayer) {
 						this->field[{ x + 1, y }] = nullptr;
 						this->finish = true;
@@ -387,7 +388,7 @@ void Field::checkSurroundingFields() {
 				}
 			}
 		}
-		else if ((x == 0 && y + 2 == this->size-1) || (x == this->size - 1 && y + 2 == this->size-1)) {
+		else if ((x == 0 && y + 2 == this->size - 1) || (x == this->size - 1 && y + 2 == this->size - 1)) {
 			this->field[{ x, y + 1 }] = nullptr;
 		}
 		else if (y + 2 < this->size && this->field.at({ x, y + 2 }) != nullptr) {
@@ -399,7 +400,7 @@ void Field::checkSurroundingFields() {
 }
 
 void Field::handleEvents(SDL_Event event) {
-	
+
 
 	if (this->selectedFigure != nullptr) {
 		if (this->selectedFigure->isMoving()) {
@@ -436,13 +437,13 @@ void Field::handleEvents(SDL_Event event) {
 				for (SDL_Rect &field : this->availableFields) {
 					if (x > field.x && x < field.x + field.w && y > field.y && y < field.y + field.h) {
 						std::array<int, 2> field = this->getFieldOnPoint(x, y);
+						std::vector<std::string> letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+						std::vector<std::string> numbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26" };
 						if (this->currentPlayer == 0) {
-							this->text += "Schwarz ging von {" + std::to_string(this->selectedFigure->getXField()) + ", " + std::to_string(this->selectedFigure->getYField())
-								+ "} zu {" + std::to_string(field[0]) + ", " + std::to_string(field[1]) + "}\n";
+							this->text += "Schwarz ging von " + letters[this->selectedFigure->getXField()] + numbers[this->selectedFigure->getYField()] + " zu " + letters[field[0]] + numbers[field[1]] + "\n";
 						}
 						else {
-							this->text += "Weiß ging von {" + std::to_string(this->selectedFigure->getXField()) + ", " + std::to_string(this->selectedFigure->getYField())
-								+ "} zu {" + std::to_string(field[0]) + ", " + std::to_string(field[1]) + "}\n";
+							this->text += "Weiß ging von " + letters[this->selectedFigure->getXField()] + numbers[this->selectedFigure->getYField()] + " zu " + letters[field[0]] + numbers[field[1]] + "\n";
 						}
 						int counter = 0;
 						for (auto i : this->text) {
@@ -452,7 +453,7 @@ void Field::handleEvents(SDL_Event event) {
 						}
 						//MAKE THIS DYNAMIC
 						if (counter > 17) {
-							this->text.erase(0, this->text.find("\n")+1);
+							this->text.erase(0, this->text.find("\n") + 1);
 						}
 						this->selectedFigure->move(this->fieldTexture->getPos()->x + (field[0] * 36 + 2), this->fieldTexture->getPos()->y + (field[1] * 36 + 2));
 						this->field[{ this->selectedFigure->getXField(), this->selectedFigure->getYField() }] = nullptr;
@@ -499,7 +500,7 @@ void Field::handleEvents(SDL_Event event) {
 					continue;
 				}
 				if (x > this->fieldTexture->getPos()->x + figure->getXField() * 36 && x < this->fieldTexture->getPos()->x + figure->getXField() * 36 + 36 &&
-						y > this->fieldTexture->getPos()->y + figure->getYField() * 36 && y < this->fieldTexture->getPos()->y + figure->getYField() * 36 + 36) {
+					y > this->fieldTexture->getPos()->y + figure->getYField() * 36 && y < this->fieldTexture->getPos()->y + figure->getYField() * 36 + 36) {
 					this->selectedFigure = figure;
 					this->checkAvailableFields();
 				}
@@ -517,7 +518,7 @@ void Field::update() {
 
 void Field::render() {
 	this->fieldTexture->render();
-	
+
 	for (auto &element : this->field) {
 		Figure* figure = element.second;
 		if (figure == nullptr) {

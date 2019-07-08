@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 	int frameTime;
 
 	GameManager manager;
-	manager.initialize("Hnefatafl v0.3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 600, false);
+	manager.initialize("Hnefatafl v1.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 600, false);
 
 	manager.changeState(MenuState::Instance());
 

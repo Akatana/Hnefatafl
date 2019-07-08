@@ -22,8 +22,9 @@ void PlayState::init(GameManager* manager) {
 	this->pauseTexture->setPos(400, 0);
 	this->pauseText = new Label(this->manager, "assets/fonts/viking2.ttf", "Pause", 40);
 	this->pauseText->setPos(500 - (this->pauseText->getRect().w / 2), 16);
-	
+
 	this->returnButton = new Button(this->manager, "Weiter", 150, 40, 425, 70, 192, 64);
+	this->endButton = new Button(this->manager, "Hauptmenü", 150, 40, 425, 315, 192, 64);
 	this->menuButton = new Button(this->manager, "Hauptmenü", 150, 40, 425, 115, 192, 64);
 	this->saveButton = new Button(this->manager, "Speichern", 150, 40, 425, 160, 192, 64);
 	this->loadButton = new Button(this->manager, "Laden", 150, 40, 425, 205, 192, 64);
@@ -42,11 +43,13 @@ void PlayState::clean() {
 	this->saveButton->clean();
 	this->loadButton->clean();
 	this->exitButton->clean();
+	this->endButton->clean();
 	free(this->returnButton);
 	free(this->menuButton);
 	free(this->saveButton);
 	free(this->loadButton);
 	free(this->exitButton);
+	free(this->endButton);
 	printf("[INFO] PlayState was cleaned\n");
 }
 
@@ -61,14 +64,21 @@ void PlayState::resume() {
 void PlayState::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
+	if (this->field->isFinished()) {
+		this->endButton->handleEvents(event);
 
+		if (this->endButton->isClicked()) {
+			this->endButton->setClicked(false);
+			this->manager->changeState(MenuState::Instance());
+		}
+	}
 	if (this->paused) {
 		this->returnButton->handleEvents(event);
 		this->menuButton->handleEvents(event);
 		this->saveButton->handleEvents(event);
 		this->loadButton->handleEvents(event);
 		this->exitButton->handleEvents(event);
-
+		
 		//Buttons überprüfen
 		if (this->returnButton->isClicked()) {
 			this->returnButton->setClicked(false);
@@ -97,7 +107,7 @@ void PlayState::handleEvents() {
 	else {
 		this->field->handleEvents(event);
 	}
-	
+
 
 	if (event.type == SDL_QUIT) {
 		this->manager->quit();
@@ -132,8 +142,6 @@ void PlayState::update() {
 		}
 		this->gameOverText->setText("assets/fonts/viking2.ttf", (currentPlayer + " hat gewonnen!").c_str(), 50);
 	}
-	
-	//this->field->getText().c_str()"a\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\nende\n"
 	this->infoText->setText("assets/fonts/arial.ttf", (this->field->getText()).c_str(), 20);
 	this->currentPlayer->setText("assets/fonts/arial.ttf", ("Am Zug: " + currentPlayer).c_str(), 25);
 	this->moveAmount->setText("assets/fonts/arial.ttf", ("Zug: " + std::to_string(this->field->getTurns())).c_str(), 25);
@@ -143,6 +151,24 @@ void PlayState::update() {
 void PlayState::render() {
 	SDL_RenderClear(this->manager->getRenderer());
 	this->background->render();
+
+	//Game is running
+	
+	if (!this->field->isFinished()) {
+		this->field->render();
+		this->currentPlayer->render();
+		this->moveAmount->render();
+		SDL_SetRenderDrawBlendMode(this->manager->getRenderer(), SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(this->manager->getRenderer(), 255, 255, 255, 70);
+		SDL_RenderFillRect(this->manager->getRenderer(), &this->infoBackground);
+		this->infoText->render();
+	}
+	//Game is over
+	else {
+		this->gameOverText->setPos(500 - (this->gameOverText->getRect().w / 2), 200);
+		this->gameOverText->render();
+		this->endButton->render();
+	}
 	if (this->paused) {
 		this->pauseTexture->render();
 		this->pauseText->render();
@@ -151,22 +177,6 @@ void PlayState::render() {
 		this->saveButton->render();
 		this->loadButton->render();
 		this->exitButton->render();
-	}
-	else {
-		//Game is running
-		if (!this->field->isFinished()) {
-			this->field->render();
-			this->currentPlayer->render();
-			this->moveAmount->render();
-			SDL_SetRenderDrawBlendMode(this->manager->getRenderer(), SDL_BLENDMODE_BLEND);
-			SDL_SetRenderDrawColor(this->manager->getRenderer(), 255, 255, 255, 70);
-			SDL_RenderFillRect(this->manager->getRenderer(), &this->infoBackground);
-			this->infoText->render();
-		}
-		//Game is over
-		else {
-			this->gameOverText->render();
-		}
 	}
 	SDL_RenderPresent(this->manager->getRenderer());
 }

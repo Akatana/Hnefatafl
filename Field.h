@@ -19,7 +19,7 @@ public:
 	Field() {}
 	Field(GameManager* manager, const char* file, int xPos, int yPos);
 	void setPos(int x, int y);
-	bool isFinished() { return this->finish;  }
+	bool isFinished() { return this->finish; }
 	int getCurrentPlayer() { return this->currentPlayer; }
 	std::map<std::vector<int>, Figure*> getLastMove() { return this->lastMove; }
 	int getTurns() { return this->turns; }
@@ -39,7 +39,7 @@ private:
 	Texture* fieldTexture;
 	Config* config;
 	Figure* selectedFigure;
-	int currentPlayer = 0;
+	int currentPlayer = 1;
 	int turns = 0;
 	bool finish = false;
 	std::map<std::vector<int>, Figure*> lastMove;
@@ -48,7 +48,7 @@ private:
 	int size;
 	int xPos;
 	int yPos;
-	std::array<SDL_Rect,4> availableFields;
+	std::array<SDL_Rect, 4> availableFields;
 
 	//methods
 	void checkAvailableFields();
